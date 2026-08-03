@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Lock, User as UserIcon } from 'lucide-react';
 import { User } from '../types';
+import plantationImg from '../assets/images/oil_palm_plantation_1785765864473.jpg';
 
 interface LoginProps {
   users: User[];
@@ -80,7 +81,7 @@ export const Login: React.FC<LoginProps> = ({ users, onLoginSuccess }) => {
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-85"
             style={{
-              backgroundImage: `url('/src/assets/images/oil_palm_plantation_1785765864473.jpg')`,
+              backgroundImage: `url('${plantationImg}')`,
               filter: 'brightness(0.9) contrast(1.05)'
             }}
           />
