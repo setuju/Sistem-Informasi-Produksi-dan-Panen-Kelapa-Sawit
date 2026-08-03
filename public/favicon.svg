@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15803d" />
+      <stop offset="100%" stop-color="#166534" />
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="100%" stop-color="#eab308" />
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background typical of high-quality app icons -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  
+  <!-- Outer golden decorative circle ring -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="url(#leafGrad)" stroke-width="12" stroke-opacity="0.4" />
+  <circle cx="256" cy="256" r="190" fill="none" stroke="url(#leafGrad)" stroke-width="4" stroke-opacity="0.8" />
+
+  <!-- Stylized palm frond / leaf graphic in center -->
+  <g transform="translate(256, 276) scale(1.6)">
+    <!-- Central stem -->
+    <path d="M 0,10 C 0,-40 -15,-90 -20,-110 C -20,-110 -5,-70 0,10" fill="url(#leafGrad)" />
+    
+    <!-- Left side leaflets -->
+    <path d="M -2,-15 C -25,-25 -65,-30 -80,-20 C -45,-10 -15,-5 -2,-15" fill="url(#leafGrad)" />
+    <path d="M -3,-35 C -35,-48 -75,-48 -88,-35 C -50,-25 -20,-18 -3,-35" fill="url(#leafGrad)" />
+    <path d="M -4,-55 C -40,-70 -75,-65 -85,-50 C -50,-42 -22,-32 -4,-55" fill="url(#leafGrad)" />
+    <path d="M -5,-75 C -38,-90 -65,-82 -72,-68 C -42,-60 -20,-48 -5,-75" fill="url(#leafGrad)" />
+    <path d="M -5,-92 C -30,-102 -50,-92 -55,-80 C -32,-75 -15,-62 -5,-92" fill="url(#leafGrad)" />
+
+    <!-- Right side leaflets -->
+    <path d="M 2,-15 C 25,-25 65,-30 80,-20 C 45,-10 15,-5 2,-15" fill="url(#leafGrad)" />
+    <path d="M 3,-35 C 35,-48 75,-48 88,-35 C 50,-25 20,-18 3,-35" fill="url(#leafGrad)" />
+    <path d="M 4,-55 C 40,-70 75,-65 85,-50 C 50,-42 22,-32 4,-55" fill="url(#leafGrad)" />
+    <path d="M 5,-75 C 38,-90 65,-82 72,-68 C 42,-60 20,-48 5,-75" fill="url(#leafGrad)" />
+    <path d="M 5,-92 C 30,-102 50,-92 55,-80 C 32,-75 15,-62 5,-92" fill="url(#leafGrad)" />
+  </g>
+</svg>
