@@ -44,6 +44,7 @@ export default function App() {
   // State Autentikasi Pengguna (Default: unauthenticated / Landing Page Login)
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [activePage, setActivePage] = useState<ActivePage>('login');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   // State Data Master & Transaksi
   const [users, setUsers] = useState<User[]>(initialUsers);
@@ -219,122 +220,23 @@ export default function App() {
         }}
         activePage={activePage}
         setActivePage={setActivePage}
+        onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
       />
 
       {/* MAIN CONTAINER (SIDEBAR + CONTENT) */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* SIDEBAR NAVIGASI KIRI */}
-        <div className="hidden md:block print:hidden">
-          <Sidebar
-            activePage={activePage}
-            setActivePage={setActivePage}
-            dssAlertCount={criticalDssCount}
-            currentUser={currentUser}
-          />
-        </div>
-
-        {/* MOBILE NAVIGATION BAR */}
-        <div className="md:hidden bg-slate-900 text-white flex overflow-x-auto p-2 gap-2 text-xs font-semibold print:hidden border-b border-slate-700 shrink-0">
-          <button
-            onClick={() => setActivePage('dashboard')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'dashboard' ? 'bg-[#15803d]' : 'bg-slate-800'
-            }`}
-          >
-            Dashboard
-          </button>
-          <button
-            onClick={() => setActivePage('data-user')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'data-user' ? 'bg-[#15803d]' : 'bg-slate-800'
-            }`}
-          >
-            User
-          </button>
-          <button
-            onClick={() => setActivePage('data-blok')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'data-blok' ? 'bg-[#15803d]' : 'bg-slate-800'
-            }`}
-          >
-            Blok
-          </button>
-          <button
-            onClick={() => setActivePage('data-petugas')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'data-petugas' ? 'bg-[#15803d]' : 'bg-slate-800'
-            }`}
-          >
-            Petugas
-          </button>
-          <button
-            onClick={() => setActivePage('data-mandor')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'data-mandor' ? 'bg-[#15803d]' : 'bg-slate-800'
-            }`}
-          >
-            Mandor
-          </button>
-          <button
-            onClick={() => setActivePage('data-jadwal')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'data-jadwal' ? 'bg-[#15803d]' : 'bg-slate-800'
-            }`}
-          >
-            Jadwal
-          </button>
-          <button
-            onClick={() => setActivePage('hasil-panen')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'hasil-panen' ? 'bg-[#15803d]' : 'bg-slate-800'
-            }`}
-          >
-            TBS
-          </button>
-          <button
-            onClick={() => setActivePage('brondolan')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'brondolan' ? 'bg-[#15803d]' : 'bg-slate-800'
-            }`}
-          >
-            Brondolan
-          </button>
-          <button
-            onClick={() => setActivePage('pesan-tugas')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'pesan-tugas' ? 'bg-emerald-700' : 'bg-slate-800'
-            }`}
-          >
-            Pesan & Tugas
-          </button>
-          <button
-            onClick={() => setActivePage('laporan-produksi')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'laporan-produksi' ? 'bg-[#15803d]' : 'bg-slate-800'
-            }`}
-          >
-            Laporan
-          </button>
-          <button
-            onClick={() => setActivePage('analisis-dss')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'analisis-dss' ? 'bg-amber-600' : 'bg-slate-800'
-            }`}
-          >
-            DSS ({criticalDssCount})
-          </button>
-          <button
-            onClick={() => setActivePage('kode-ooad-sql')}
-            className={`px-3 py-1.5 rounded whitespace-nowrap ${
-              activePage === 'kode-ooad-sql' ? 'bg-indigo-600' : 'bg-slate-800'
-            }`}
-          >
-            Kode PHP/SQL
-          </button>
-        </div>
+      <div className="flex flex-1 overflow-hidden relative">
+        {/* SIDEBAR NAVIGASI (DESKTOP + MOBILE DRAWER) */}
+        <Sidebar
+          activePage={activePage}
+          setActivePage={setActivePage}
+          dssAlertCount={criticalDssCount}
+          currentUser={currentUser}
+          isOpen={isMobileSidebarOpen}
+          onClose={() => setIsMobileSidebarOpen(false)}
+        />
 
         {/* CONTENT AREA UTAMA */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
+        <main className="flex-1 p-3 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
           {activePage === 'dashboard' && (
             <Dashboard
               currentUser={currentUser}
