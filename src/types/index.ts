@@ -159,6 +159,33 @@ export interface LaporanProduksiHarian {
   total_brondolan_kg: number;
 }
 
+export interface Message {
+  id: number;
+  sender_id: number;
+  sender_name?: string;
+  sender_role?: UserRole;
+  receiver_id: number;
+  receiver_name?: string;
+  receiver_role?: UserRole;
+  message_text: string;
+  is_read: boolean;
+  created_at: string;
+}
+
+export interface Task {
+  id: number;
+  manager_id: number;
+  manager_name?: string;
+  mandor_id: number;
+  mandor_name?: string;
+  task_description: string;
+  blok_name?: string;
+  status: 'pending' | 'done';
+  notes?: string;
+  created_at: string;
+  verified_at?: string;
+}
+
 export type ActivePage = 
   | 'login'
   | 'dashboard'
@@ -171,4 +198,5 @@ export type ActivePage =
   | 'brondolan'
   | 'laporan-produksi'
   | 'analisis-dss'
+  | 'pesan-tugas'
   | 'kode-ooad-sql';

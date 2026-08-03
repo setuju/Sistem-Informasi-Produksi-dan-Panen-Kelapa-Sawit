@@ -7,6 +7,8 @@ import {
   JadwalPanen, 
   HasilPanenTBS, 
   Brondolan, 
+  Message,
+  Task,
   ActivePage 
 } from './types';
 import { 
@@ -16,7 +18,9 @@ import {
   initialMandor, 
   initialJadwalPanen, 
   initialHasilPanenTBS, 
-  initialBrondolan 
+  initialBrondolan,
+  initialMessages,
+  initialTasks
 } from './data/initialData';
 import { analyzeHarvestDrop } from './utils/dssEngine';
 
@@ -33,6 +37,7 @@ import { DataHasilPanen } from './components/DataHasilPanen';
 import { DataBrondolan } from './components/DataBrondolan';
 import { LaporanProduksi } from './components/LaporanProduksi';
 import { AnalisisDSS } from './components/AnalisisDSS';
+import { PesanDanTugas } from './components/PesanDanTugas';
 import { PhpMvcCodeViewer } from './components/PhpMvcCodeViewer';
 
 export default function App() {
@@ -48,6 +53,10 @@ export default function App() {
   const [jadwalPanen, setJadwalPanen] = useState<JadwalPanen[]>(initialJadwalPanen);
   const [hasilPanen, setHasilPanen] = useState<HasilPanenTBS[]>(initialHasilPanenTBS);
   const [brondolanList, setBrondolanList] = useState<Brondolan[]>(initialBrondolan);
+
+  // State Pesan & Tugas Mandor
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   // Custom Manager DSS Note Overrides
   const [dssManagerNotes, setDssManagerNotes] = useState<{ [id: number]: string }>({});
@@ -66,6 +75,40 @@ export default function App() {
   const criticalDssCount = evaluasiDss.filter(
     (e) => (e.status_peringatan === 'Kritis' || e.status_peringatan === 'Waspada') && e.status_tindak_lanjut !== 'Selesai'
   ).length;
+
+  // Handlers Messages & Tasks
+  const handleSendMessage = (msg: Omit<Message, 'id' | 'created_at'>) => {
+    const newMsg: Message = {
+      ...msg,
+      id: Date.now(),
+      created_at: new Date().toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' })
+    };
+    setMessages([newMsg, ...messages]);
+  };
+
+  const handleAddTask = (task: Omit<Task, 'id' | 'created_at' | 'status'>) => {
+    const newTask: Task = {
+      ...task,
+      id: Date.now(),
+      status: 'pending',
+      created_at: new Date().toISOString().split('T')[0]
+    };
+    setTasks([newTask, ...tasks]);
+  };
+
+  const handleUpdateTaskStatus = (taskId: number, status: 'pending' | 'done', notes?: string) => {
+    setTasks(tasks.map((t) => {
+      if (t.id === taskId) {
+        return {
+          ...t,
+          status,
+          notes: notes !== undefined ? notes : t.notes,
+          verified_at: status === 'done' ? new Date().toISOString().split('T')[0] : undefined
+        };
+      }
+      return t;
+    }));
+  };
 
   // Handlers CRUD Users
   const handleAddUser = (user: Omit<User, 'id'>) => {
@@ -257,6 +300,14 @@ export default function App() {
             Brondolan
           </button>
           <button
+            onClick={() => setActivePage('pesan-tugas')}
+            className={`px-3 py-1.5 rounded whitespace-nowrap ${
+              activePage === 'pesan-tugas' ? 'bg-emerald-700' : 'bg-slate-800'
+            }`}
+          >
+            Pesan & Tugas
+          </button>
+          <button
             onClick={() => setActivePage('laporan-produksi')}
             className={`px-3 py-1.5 rounded whitespace-nowrap ${
               activePage === 'laporan-produksi' ? 'bg-[#15803d]' : 'bg-slate-800'
@@ -361,6 +412,18 @@ export default function App() {
               onAdd={handleAddBrondolan}
               onEdit={handleEditBrondolan}
               onDelete={handleDeleteBrondolan}
+            />
+          )}
+
+          {activePage === 'pesan-tugas' && (
+            <PesanDanTugas
+              currentUser={currentUser}
+              users={users}
+              messages={messages}
+              tasks={tasks}
+              onSendMessage={handleSendMessage}
+              onAddTask={handleAddTask}
+              onUpdateTaskStatus={handleUpdateTaskStatus}
             />
           )}
 

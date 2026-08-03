@@ -18,6 +18,7 @@ const PAGE_TITLES: Record<ActivePage, string> = {
   'data-jadwal': 'Jadwal Panen',
   'hasil-panen': 'Hasil Panen (TBS)',
   brondolan: 'Data Brondolan',
+  'pesan-tugas': 'Pesan & Verifikasi Tugas Mandor',
   'laporan-produksi': 'Laporan Produksi',
   'analisis-dss': 'Analisis Keputusan (DSS)',
   'kode-ooad-sql': 'Kode PHP Native MVC & database.sql',

@@ -1,9 +1,10 @@
-import { User, BlokKebun, PetugasPanen, Mandor, JadwalPanen, HasilPanenTBS, Brondolan } from '../types';
+import { User, BlokKebun, PetugasPanen, Mandor, JadwalPanen, HasilPanenTBS, Brondolan, Message, Task } from '../types';
 
 export const initialUsers: User[] = [
   { id: 1, username: 'admin', nama_lengkap: 'Administrator Utama', role: 'Admin' },
   { id: 2, username: 'manajer', nama_lengkap: 'Bapak Ir. Hendra Suputra', role: 'Manajer' },
-  { id: 3, username: 'mandor1', nama_lengkap: 'Rahmat Hidayat', role: 'Mandor' }
+  { id: 3, username: 'mandor1', nama_lengkap: 'Rahmat Hidayat', role: 'Mandor' },
+  { id: 4, username: 'mandor2', nama_lengkap: 'Irwan Saputra', role: 'Mandor' }
 ];
 
 export const initialBlokKebun: BlokKebun[] = [
@@ -52,7 +53,7 @@ export const initialHasilPanenTBS: HasilPanenTBS[] = [
   { id: 9, tanggal: '2024-05-14', blok_id: 3, petugas_id: 3, jumlah_janjang: 125, berat_kg: 1950 },
   { id: 10, tanggal: '2024-05-15', blok_id: 4, petugas_id: 4, jumlah_janjang: 118, berat_kg: 1800 },
   { id: 11, tanggal: '2024-05-16', blok_id: 1, petugas_id: 5, jumlah_janjang: 135, berat_kg: 2100 },
-  { id: 12, tanggal: '2024-05-17', blok_id: 2, petugas_id: 1, jumlah_janjang: 75, berat_kg: 1100 } // Drop in Blok A2 for DSS alert!
+  { id: 12, tanggal: '2024-05-17', blok_id: 2, petugas_id: 1, jumlah_janjang: 75, berat_kg: 1100 }
 ];
 
 export const initialBrondolan: Brondolan[] = [
@@ -61,4 +62,59 @@ export const initialBrondolan: Brondolan[] = [
   { id: 3, tanggal: '2024-05-19', blok_id: 3, jumlah_kg: 200, keterangan: 'Brondolan Panen' },
   { id: 4, tanggal: '2024-05-19', blok_id: 4, jumlah_kg: 180, keterangan: 'Brondolan Panen' },
   { id: 5, tanggal: '2024-05-20', blok_id: 5, jumlah_kg: 160, keterangan: 'Brondolan Panen' }
+];
+
+export const initialMessages: Message[] = [
+  {
+    id: 1,
+    sender_id: 1, // Admin
+    sender_name: 'Administrator Utama',
+    sender_role: 'Admin',
+    receiver_id: 2, // Manager
+    receiver_name: 'Bapak Ir. Hendra Suputra',
+    receiver_role: 'Manajer',
+    message_text: 'Pak Manajer, tolong cek laporan evaluasi DSS di Blok A2 karena terjadi penurunan tonase.',
+    is_read: true,
+    created_at: '2024-05-18 08:30'
+  },
+  {
+    id: 2,
+    sender_id: 2, // Manager
+    sender_name: 'Bapak Ir. Hendra Suputra',
+    sender_role: 'Manajer',
+    receiver_id: 3, // Mandor
+    receiver_name: 'Rahmat Hidayat',
+    receiver_role: 'Mandor',
+    message_text: 'Instruksi: Cek kebersihan piringan dan pemupukan di Blok A2 hari ini.',
+    is_read: false,
+    created_at: '2024-05-18 09:15'
+  }
+];
+
+export const initialTasks: Task[] = [
+  {
+    id: 1,
+    manager_id: 2,
+    manager_name: 'Bapak Ir. Hendra Suputra',
+    mandor_id: 3,
+    mandor_name: 'Rahmat Hidayat',
+    task_description: 'Evaluasi & pembersihan piringan pohon sawit di Blok A2 pasca penurunan hasil panen.',
+    blok_name: 'Blok A2',
+    status: 'pending',
+    notes: '',
+    created_at: '2024-05-18 09:20'
+  },
+  {
+    id: 2,
+    manager_id: 2,
+    manager_name: 'Bapak Ir. Hendra Suputra',
+    mandor_id: 3,
+    mandor_name: 'Rahmat Hidayat',
+    task_description: 'Pemeriksaan ancak panen rutin Afdeling 1.',
+    blok_name: 'Blok A1',
+    status: 'done',
+    notes: 'Ancak panen sudah bersih dan tertata sesuai standar.',
+    created_at: '2024-05-17 07:45',
+    verified_at: '2024-05-17 16:30'
+  }
 ];
