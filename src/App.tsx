@@ -41,9 +41,9 @@ import { PesanDanTugas } from './components/PesanDanTugas';
 import { PhpMvcCodeViewer } from './components/PhpMvcCodeViewer';
 
 export default function App() {
-  // State Autentikasi Pengguna
-  const [currentUser, setCurrentUser] = useState<User | null>(initialUsers[0]);
-  const [activePage, setActivePage] = useState<ActivePage>('dashboard');
+  // State Autentikasi Pengguna (Default: unauthenticated / Landing Page Login)
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [activePage, setActivePage] = useState<ActivePage>('login');
 
   // State Data Master & Transaksi
   const [users, setUsers] = useState<User[]>(initialUsers);
