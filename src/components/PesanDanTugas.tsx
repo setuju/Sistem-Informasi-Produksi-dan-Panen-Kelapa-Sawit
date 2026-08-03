@@ -271,17 +271,17 @@ export const PesanDanTugas: React.FC<PesanDanTugasProps> = ({
                               onClick={() => {
                                 setSelectedTaskId(task.id);
                               }}
-                              className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-2xs transition-colors flex items-center gap-1"
+                              className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5 min-h-[44px] cursor-pointer"
                             >
-                              <CheckCircle className="w-3.5 h-3.5" />
+                              <CheckCircle className="w-4 h-4" />
                               <span>Verifikasi "SELESAI"</span>
                             </button>
                           ) : (
                             <button
                               onClick={() => onUpdateTaskStatus(task.id, 'pending')}
-                              className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg shadow-2xs transition-colors flex items-center gap-1"
+                              className="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg shadow-2xs transition-colors flex items-center gap-1.5 min-h-[44px] cursor-pointer"
                             >
-                              <AlertCircle className="w-3.5 h-3.5" />
+                              <AlertCircle className="w-4 h-4" />
                               <span>Set "BELUM SELESAI"</span>
                             </button>
                           )}

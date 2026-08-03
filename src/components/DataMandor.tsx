@@ -86,7 +86,9 @@ export const DataMandor: React.FC<DataMandorProps> = ({
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      {/* RESPONSIVE TABLE & CARD VIEW STRATEGY */}
+      {/* DESKTOP TABLE VIEW */}
+      <div className="hidden md:block bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -129,21 +131,25 @@ export const DataMandor: React.FC<DataMandorProps> = ({
                     </td>
                     <td className="py-3.5 px-6 text-center">
                       <div className="flex items-center justify-center gap-2">
+                        {/* YELLOW EDIT BUTTON WITH ENHANCED HIT TARGET */}
                         <button
                           onClick={() => openEditModal(item)}
-                          className="bg-[#f59e0b] hover:bg-[#d97706] text-white text-xs px-3 py-1.5 rounded font-bold transition flex items-center gap-1 shadow-sm cursor-pointer"
+                          className="bg-[#f59e0b] hover:bg-[#d97706] text-white text-xs px-3.5 py-2.5 rounded-lg font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer min-h-[44px] min-w-[84px] justify-center"
+                          title="Edit Mandor"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
                           <span>Edit</span>
                         </button>
 
+                        {/* RED DELETE BUTTON WITH ENHANCED HIT TARGET */}
                         <button
                           onClick={() => {
                             if (confirm(`Yakin ingin menghapus mandor ${item.nama_mandor}?`)) {
                               onDelete(item.id);
                             }
                           }}
-                          className="bg-[#ef4444] hover:bg-[#dc2626] text-white text-xs px-3 py-1.5 rounded font-bold transition flex items-center gap-1 shadow-sm cursor-pointer"
+                          className="bg-[#ef4444] hover:bg-[#dc2626] text-white text-xs px-3.5 py-2.5 rounded-lg font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer min-h-[44px] min-w-[84px] justify-center"
+                          title="Hapus Mandor"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                           <span>Hapus</span>
@@ -156,6 +162,68 @@ export const DataMandor: React.FC<DataMandorProps> = ({
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* MOBILE LIST CARD VIEW */}
+      <div className="block md:hidden space-y-4">
+        {mandorList.length === 0 ? (
+          <div className="bg-white p-6 rounded-xl border border-gray-200 text-center text-slate-400 font-medium">
+            Belum ada data mandor.
+          </div>
+        ) : (
+          mandorList.map((item, index) => (
+            <div key={item.id} className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-xs shrink-0">
+                    {index + 1}
+                  </span>
+                  <span className="font-bold text-slate-900 flex items-center gap-1.5 text-base">
+                    <HardHat className="w-4 h-4 text-amber-600 shrink-0" />
+                    {item.nama_mandor}
+                  </span>
+                </div>
+                <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                  item.status === 'Aktif'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-slate-100 text-slate-600'
+                }`}>
+                  {item.status}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-sm font-medium">
+                <div>
+                  <span className="text-xs text-slate-400 block uppercase font-bold tracking-wider mb-0.5">Wilayah Afdeling</span>
+                  <span className="text-slate-800 text-sm font-bold">{item.wilayah}</span>
+                </div>
+                <div>
+                  <span className="text-xs text-slate-400 block uppercase font-bold tracking-wider mb-0.5">No. HP</span>
+                  <span className="text-slate-800 text-xs font-mono font-bold">{item.no_hp}</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+                <button
+                  onClick={() => openEditModal(item)}
+                  className="flex-1 bg-[#f59e0b] hover:bg-[#d97706] text-white text-sm px-4 py-3 rounded-lg font-bold transition flex items-center justify-center gap-2 shadow-xs min-h-[44px] cursor-pointer"
+                >
+                  <Edit2 className="w-4 h-4" />
+                  <span>Edit</span>
+                </button>
+                <button
+                  onClick={() => {
+                    if (confirm(`Yakin ingin menghapus mandor ${item.nama_mandor}?`)) {
+                      onDelete(item.id);
+                    }
+                  }}
+                  className="flex-1 bg-[#ef4444] hover:bg-[#dc2626] text-white text-sm px-4 py-3 rounded-lg font-bold transition flex items-center justify-center gap-2 shadow-xs min-h-[44px] cursor-pointer"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  <span>Hapus</span>
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       <Modal
@@ -174,7 +242,7 @@ export const DataMandor: React.FC<DataMandorProps> = ({
               placeholder="Contoh: Rahmat Hidayat"
               value={namaMandor}
               onChange={(e) => setNamaMandor(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-green-600 focus:outline-none"
+              className="w-full px-3 py-2.5 md:py-2 border border-gray-300 rounded text-base md:text-sm focus:ring-2 focus:ring-green-600 focus:outline-none bg-white"
             />
           </div>
 
@@ -188,7 +256,7 @@ export const DataMandor: React.FC<DataMandorProps> = ({
               placeholder="Contoh: Afdeling 1 & 3"
               value={wilayah}
               onChange={(e) => setWilayah(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-green-600 focus:outline-none"
+              className="w-full px-3 py-2.5 md:py-2 border border-gray-300 rounded text-base md:text-sm focus:ring-2 focus:ring-green-600 focus:outline-none bg-white"
             />
           </div>
 
@@ -202,7 +270,7 @@ export const DataMandor: React.FC<DataMandorProps> = ({
               placeholder="Contoh: 081370001122"
               value={noHp}
               onChange={(e) => setNoHp(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-green-600 focus:outline-none"
+              className="w-full px-3 py-2.5 md:py-2 border border-gray-300 rounded text-base md:text-sm focus:ring-2 focus:ring-green-600 focus:outline-none bg-white"
             />
           </div>
 
@@ -213,24 +281,24 @@ export const DataMandor: React.FC<DataMandorProps> = ({
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as 'Aktif' | 'Non-Aktif')}
-              className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-green-600 focus:outline-none"
+              className="w-full px-3 py-2.5 md:py-2 border border-gray-300 rounded text-base md:text-sm focus:ring-2 focus:ring-green-600 focus:outline-none bg-white"
             >
               <option value="Aktif">Aktif</option>
               <option value="Non-Aktif">Non-Aktif</option>
             </select>
           </div>
 
-          <div className="pt-4 flex justify-end gap-2 border-t border-gray-100">
+          <div className="pt-4 flex items-center justify-end gap-2 border-t border-gray-100">
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
-              className="px-4 py-2 border border-gray-300 text-slate-700 text-xs font-semibold rounded hover:bg-slate-50"
+              className="flex-1 sm:flex-initial px-4 py-3 sm:py-2 border border-gray-300 text-slate-700 text-sm sm:text-xs font-semibold rounded-lg sm:rounded hover:bg-slate-50 min-h-[44px] sm:min-h-0 flex items-center justify-center cursor-pointer transition"
             >
               Batal
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-[#16a34a] hover:bg-[#15803d] text-white text-xs font-bold rounded shadow"
+              className="flex-1 sm:flex-initial px-4 py-3 sm:py-2 bg-[#16a34a] hover:bg-[#15803d] text-white text-sm sm:text-xs font-bold rounded-lg sm:rounded shadow min-h-[44px] sm:min-h-0 flex items-center justify-center cursor-pointer transition"
             >
               Simpan Data
             </button>
